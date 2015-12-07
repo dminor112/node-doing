@@ -1,0 +1,13 @@
+/node_modules
+/bower_components
+/dist
+/.DS_Store
+.DS_Store
+.idea
+.sass-cache
+.bak
+static/tmp
+zip
+/out
+npm-debug.log
+platforms
