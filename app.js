@@ -3,8 +3,9 @@
  */
 var express = require('express');
 var doingRouter = require('./router');
+var busboy = require('connect-busboy');
 var app = express();
-var Doing = require('./dao').Doing;
 
+app.use(busboy());
 app.use('/', doingRouter);
 app.listen(3000)

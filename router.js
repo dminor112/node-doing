@@ -4,6 +4,8 @@
 var express = require('express');
 var router = express.Router();
 var test = require('./controller/test');
+var register = require('./controller/register');
 
 router.get('/hello', test.hello);
+router.post('/do/gi', register.register);
 module.exports = router;
