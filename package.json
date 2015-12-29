@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "dependencies": {
     "connect-busboy": "0.0.2",
+    "eventproxy": "^0.3.4",
     "express": "^4.12.4",
     "mysql": "2.9.0",
     "orm": "2.1.26",
