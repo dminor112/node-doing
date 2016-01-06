@@ -4,7 +4,7 @@
 var constants = require('../constants/constants');
 var fs = require('fs');
 var path = require('path');
-var fileUtil = require('../util/fileUtil');
+var fileUtil = require('../utils/fileUtil');
 var service = {};
 
 service.saveUserIcon = function(file, callback){

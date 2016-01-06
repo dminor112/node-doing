@@ -15,3 +15,11 @@ exports.findUserInfoByUserId = function(userId, callback){
         callback && callback(userIndo);
     });
 }
+
+exports.addUserInfo = function(userInfo, callback){
+    sequelize.sync().then(function() {
+        return UserInfo.create(userInfo);
+    }).then(function(res) {
+        callback && callback(res);
+    });
+}
