@@ -8,4 +8,5 @@ var register = require('./controller/register');
 
 router.get('/hello', test.hello);
 router.post('/do/gi', register.register);
+router.post('/do/ke', register.getToken);
 module.exports = router;

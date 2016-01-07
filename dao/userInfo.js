@@ -11,8 +11,8 @@ exports.findUserInfoByUserId = function(userId, callback){
                 userId: userId
             }
         });
-    }).then(function(userIndo) {
-        callback && callback(userIndo);
+    }).then(function(userInfo) {
+        callback && callback(userInfo);
     });
 }
 

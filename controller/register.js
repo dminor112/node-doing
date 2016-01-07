@@ -11,9 +11,10 @@ var userInfoDao = require('../dao/userInfo');
 var responseUtil = require('../utils/responseUtil');
 var EventProxy = require('eventproxy');
 
-exports.register = function(req, res, next){
-    req.pipe(req.busboy);
-    var reqBody = req.busboy;
+//用户注册接口
+exports.register = function(request, response, next){
+    request.pipe(request.busboy);
+    var reqBody = request.busboy;
     var params = {};
     var userInfo = {};
     var proxy = new EventProxy();
@@ -39,9 +40,8 @@ exports.register = function(req, res, next){
         userInfo.sex = postJson.sex;
         userInfo.userId = userId;
         userInfoDao.addUserInfo(userInfo, function(result){
-            console.log('add userInfo ok.');
             commonService.getToken(userId, function(token){
-                responseUtil.responseOK(res, {
+                responseUtil.responseOK(response, {
                     token: token,
                     expire: redisConstants.TOKEN_EXPIRE
                 });
@@ -65,5 +65,27 @@ exports.register = function(req, res, next){
     });
     reqBody.on('finish', function(){
         proxy.emit('bodyFinish');
+    });
+}
+
+//客户端重新获取token接口
+exports.getToken = function(request, response, next){
+    request.pipe(request.busboy);
+    var reqBody = request.busboy;
+    var params = {};
+    reqBody.on('field', function(key, value){
+        params[key] = value;
+    });
+    reqBody.on('finish', function(){
+        var userId = params['userId'];
+        if(!userId){
+            responseUtil.responseLackParams(response);
+        }
+        commonService.getToken(userId, function(token){
+            responseUtil.responseOK(response, {
+                token: token,
+                expire: redisConstants.TOKEN_EXPIRE
+            });
+        });
     });
 }

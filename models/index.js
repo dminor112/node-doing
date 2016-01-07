@@ -46,12 +46,13 @@ var UserInfo = sequelize.define('userInfo', userInfo, { freezeTableName: true,
 exports.sequelize = sequelize;
 exports.Doing = Doing;
 exports.UserInfo = UserInfo;
-/*sequelize.sync().then(function() {
-    return Doing.findAll({
+sequelize.sync().then(function() {
+    return Doing.find({
         where: {
-            userId: '123'
+            userId: '123dasdas'
         }
     });
 }).then(function(doing) {
     console.log(doing);
-});*/
+    console.log(doing.dataValues.userId);
+});
