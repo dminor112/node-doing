@@ -23,3 +23,12 @@ exports.addUserInfo = function(userInfo, callback){
         callback && callback(res);
     });
 }
+
+exports.updateUserInfo = function(userId, userInfo, callback){
+    userInfo.userId = userId;
+    sequelize.sync().then(function() {
+        return UserInfo.update(userInfo, {'userId': userId});
+    }).then(function(res){
+        callback && callback(res);
+    });
+}

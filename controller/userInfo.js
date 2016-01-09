@@ -2,6 +2,7 @@
  * Created by wenlinli on 2016/1/7.
  */
 var responseUtil = require('../utils/responseUtil');
+var transferUtil = require('../utils/transferUtil');
 var userInfoDao = require('../dao/userInfo');
 var commonService = require('../service/commonService');
 
@@ -28,5 +29,29 @@ exports.getUserInfo = function(request, response, next){
                 responseUtil.responseOK(response, resData);
             });
         }
+    });
+}
+
+exports.setUserInfo = function(request, response, next) {
+    request.pipe(request.busboy);
+    var reqBody = request.busboy;
+    var params = {};
+    reqBody.on('field', function(key, value){
+        params[key] = value;
+    });
+    reqBody.on('finish', function(key, value){
+        var userJson = transferUtil.parseJson(param['userJson']);
+        var token = param['token'];
+        if(!token || !userJson || !userJson.userId){
+            responseUtil.responseLackParams(response);
+        }
+        var userInfo = {};
+        userInfo.age = userJson.age;
+        userInfo.nickName = userJson.nickName;
+        userInfo.sex = userJson.sex;
+        userInfo.occupation = userJson.occupation;
+        userInfoDao.updateUserInfo(userJson.userId, userInfo, function(res){
+            responseUtil.responseOK(response);
+        });
     });
 }
