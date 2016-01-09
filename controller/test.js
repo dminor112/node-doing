@@ -3,5 +3,6 @@
  */
 
 exports.hello = function(req, res, next){
+    res.setHeader("Pragma", "No-cache");
     res.send('hello...')
 }

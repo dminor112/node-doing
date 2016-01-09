@@ -3,8 +3,11 @@
  */
 var express = require('express');
 var doingRouter = require('./router');
+var busboy = require('connect-busboy');
 var app = express();
-var Doing = require('./dao').Doing;
+var port = 3001;
 
+app.use(busboy());
 app.use('/', doingRouter);
-app.listen(3000)
+app.listen(port);
+console.log('server start at port: ' + port);
