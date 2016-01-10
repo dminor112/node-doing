@@ -15,10 +15,10 @@ function getToken(userId, callback){
 }
 
 //检查token是否有效
-function checkToken(userId, callback){
+function checkToken(token, callback){
     callback && callback(true);
     if(!token || token.length < 15){
-        callback && callback(true);
+        callback && callback(false);
     }else{
         redis.exists(redisConstants.TOKEN_KEY + token, function(res){
             callback && callback(res);
@@ -26,8 +26,19 @@ function checkToken(userId, callback){
     }
 }
 
+function chackTokenProxy(token, proxy){
+    if(!token || token.length < 15){
+        prosy.emit('checkToken', false);
+    }else{
+        redis.exists(redisConstants.TOKEN_KEY + token, function(res){
+            prosy.emit('checkToken', res);
+        });
+    }
+}
+
 var Export = {};
 Export.getToken = getToken;
 Export.checkToken = checkToken;
+Export.chackTokenProxy = chackTokenProxy;
 
 module.exports = Export;

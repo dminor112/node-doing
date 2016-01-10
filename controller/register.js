@@ -53,7 +53,6 @@ exports.register = function(request, response, next){
     });
     reqBody.on('file', function(fieldName, file, fileName){
         if(fieldName == 'imgFile'){
-            console.log(99999999);
             userInfoService.saveUserIcon(file, function(url){
                 userInfo.iconUrl = url;
                 proxy.emit('imgUpload');

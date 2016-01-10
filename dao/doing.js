@@ -15,3 +15,11 @@ exports.findDoingsByUserId = function(userId, callback){
         callback && callback(doing);
     });
 }
+
+exports.addDoing = function(doing, callback){
+    sequelize.sync().then(function() {
+        return Doing.create(doing);
+    }).then(function(res) {
+        callback && callback(res);
+    });
+}

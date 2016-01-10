@@ -32,14 +32,14 @@ exports.getUserInfo = function(request, response, next){
     });
 }
 
-exports.setUserInfo = function(request, response, next) {
+exports.updateUserInfo = function(request, response, next) {
     request.pipe(request.busboy);
     var reqBody = request.busboy;
     var params = {};
     reqBody.on('field', function(key, value){
         params[key] = value;
     });
-    reqBody.on('finish', function(key, value){
+    reqBody.on('finish', function(){
         var userJson = transferUtil.parseJson(param['userJson']);
         var token = param['token'];
         if(!token || !userJson || !userJson.userId){
