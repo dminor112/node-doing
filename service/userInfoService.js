@@ -19,4 +19,8 @@ service.saveUserIcon = function(file, callback){
     });
 }
 
+service.checkUserPassword = function(userId, password, callback){
+    callback && callback(true);
+}
+
 module.exports = service;

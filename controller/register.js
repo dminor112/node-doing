@@ -9,6 +9,7 @@ var redis = require('../lib/jredis');
 var redisConstants = require('../constants/redisConstants');
 var userInfoDao = require('../dao/userInfo');
 var responseUtil = require('../utils/responseUtil');
+var transferUtil = require('../utils/transferUtil');
 var EventProxy = require('eventproxy');
 
 //用户注册接口
@@ -42,6 +43,8 @@ exports.register = function(request, response, next){
         userInfoDao.addUserInfo(userInfo, function(result){
             commonService.getToken(userId, function(token){
                 responseUtil.responseOK(response, {
+                    userId: userId,
+                    password: password,
                     token: token,
                     expire: redisConstants.TOKEN_EXPIRE
                 });
@@ -76,14 +79,18 @@ exports.getToken = function(request, response, next){
         params[key] = value;
     });
     reqBody.on('finish', function(){
-        var userId = params['userId'];
-        if(!userId){
+        var data = transferUtil.parseJson(params['data']) || {};
+        var userId = data.userId;
+        var password = data.password;
+        if(!userId || !password){
             responseUtil.responseLackParams(response);
         }
-        commonService.getToken(userId, function(token){
-            responseUtil.responseOK(response, {
-                token: token,
-                expire: redisConstants.TOKEN_EXPIRE
+        userInfoService.checkUserPassword(userId, password, function(res){
+            commonService.getToken(userId, function(token){
+                responseUtil.responseOK(response, {
+                    token: token,
+                    expire: redisConstants.TOKEN_EXPIRE
+                });
             });
         });
     });

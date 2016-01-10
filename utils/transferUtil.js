@@ -13,3 +13,6 @@ function parseJson (str){
     }
     return res;
 }
+
+var Export = {};
+Export.parseJson = parseJson;

@@ -5,7 +5,7 @@
 var EventProxy = require('eventproxy');
 var commonService = require('../service/commonService');
 var doingService = require('../service/doingService');
-var doingDao = require('../dao/doingDao');
+var doingDao = require('../dao/doing');
 var responseUtil = require('../utils/responseUtil');
 
 exports.publishDoing = function(request, response, net){
