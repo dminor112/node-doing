@@ -9,6 +9,19 @@ function parseJson (str){
         try {
             res = JSON.parse(str);
         } catch (e) {
+            console.log('paeseJson error', e);
+        }
+    }
+    return res;
+}
+
+function jsonToStr(json){
+    var res = null;
+    if(json){
+        try{
+            res = JSON.stringify(json);
+        }catch(e){
+            console.log('jsonToStr error', e);
         }
     }
     return res;
@@ -16,3 +29,5 @@ function parseJson (str){
 
 var Export = {};
 Export.parseJson = parseJson;
+Export.jsonToStr = jsonToStr;
+module.exports = Export;

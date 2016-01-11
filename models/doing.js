@@ -8,7 +8,7 @@ var doing = {
     content: Sequelize.STRING,
     imgList: Sequelize.STRING,
     publishTime: Sequelize.INTEGER,
-    deviceCode: Sequelize.STRING,
+    device: Sequelize.STRING,
     position: Sequelize.STRING
 }
 

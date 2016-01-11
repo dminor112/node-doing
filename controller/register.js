@@ -72,7 +72,22 @@ exports.register = function(request, response, next){
 
 //客户端重新获取token接口
 exports.getToken = function(request, response, next){
-    request.pipe(request.busboy);
+    var data = transferUtil.parseJson(request.query['data']);
+    if(!data || data.userId || data.password){
+        responseUtil.responseLackParams(response)
+    }else {
+        var userId = data.userId;
+        var password = data.password;
+        userInfoService.checkUserPassword(userId, password, function (res) {
+            commonService.getToken(userId, function (token) {
+                responseUtil.responseOK(response, {
+                    token: token,
+                    expire: redisConstants.TOKEN_EXPIRE
+                });
+            });
+        });
+    }
+    /*request.pipe(request.busboy);
     var reqBody = request.busboy;
     var params = {};
     reqBody.on('field', function(key, value){
@@ -80,18 +95,6 @@ exports.getToken = function(request, response, next){
     });
     reqBody.on('finish', function(){
         var data = transferUtil.parseJson(params['data']) || {};
-        var userId = data.userId;
-        var password = data.password;
-        if(!userId || !password){
-            responseUtil.responseLackParams(response);
-        }
-        userInfoService.checkUserPassword(userId, password, function(res){
-            commonService.getToken(userId, function(token){
-                responseUtil.responseOK(response, {
-                    token: token,
-                    expire: redisConstants.TOKEN_EXPIRE
-                });
-            });
-        });
-    });
+
+    });*/
 }

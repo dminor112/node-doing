@@ -7,10 +7,11 @@ var userInfoDao = require('../dao/userInfo');
 var commonService = require('../service/commonService');
 
 exports.getUserInfo = function(request, response, next){
-    var userId = request.params['userId'];
-    var token = request.params['token'];
+    var userId = request.query['userId'];
+    var token = request.query['token'];
     if(!userId || !token){
         responseUtil.responseLackParams(response);
+        return;
     }
     commonService.checkToken(userId, function(res){
         if(!res){
@@ -19,6 +20,7 @@ exports.getUserInfo = function(request, response, next){
             userInfoDao.findUserInfoByUserId(userId, function(userInfo){
                 if(!userInfo){
                     responseUtil.responseLackParams(response);
+                    return;
                 }
                 var resData = {};
                 userInfo = userInfo.dataValues;
@@ -40,8 +42,8 @@ exports.updateUserInfo = function(request, response, next) {
         params[key] = value;
     });
     reqBody.on('finish', function(){
-        var userJson = transferUtil.parseJson(param['userJson']);
-        var token = param['token'];
+        var userJson = transferUtil.parseJson(params['user']);
+        var token = params['token'];
         if(!token || !userJson || !userJson.userId){
             responseUtil.responseLackParams(response);
         }

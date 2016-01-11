@@ -3,17 +3,18 @@
  */
 var fs = require('fs');
 var crypto = require('crypto');
+var path = require('path');
 var util = {};
 //创建多层文件夹 同步
 util.mkdirsSync = function(dirpath, mode) {
     if (!fs.existsSync(dirpath)) {
         var pathtmp;
-        dirpath.split(path.sep).forEach(function(dirname) {
+        dirpath.split('/').forEach(function(dirname) {
             if (pathtmp) {
                 pathtmp = path.join(pathtmp, dirname);
             }
             else {
-                pathtmp = dirname;
+                pathtmp = '/' + dirname;
             }
             if (!fs.existsSync(pathtmp)) {
                 if (!fs.mkdirSync(pathtmp, mode)) {

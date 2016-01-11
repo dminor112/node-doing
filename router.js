@@ -10,8 +10,8 @@ var doing = require('./controller/doing');
 
 router.get('/hello', test.hello);
 router.post('/do/gi', register.register);
-router.post('/do/ke', register.getToken);
-router.post('/userinfo/get', userInfo.getUserInfo);
+router.get('/do/ke', register.getToken);
+router.get('/userinfo/get', userInfo.getUserInfo);
 router.post('/userinfo/save', userInfo.updateUserInfo);
 router.post('/doing/pub', doing.publishDoing);
 module.exports = router;

@@ -27,7 +27,7 @@ exports.addUserInfo = function(userInfo, callback){
 exports.updateUserInfo = function(userId, userInfo, callback){
     userInfo.userId = userId;
     sequelize.sync().then(function() {
-        return UserInfo.update(userInfo, {'userId': userId});
+        return UserInfo.update(userInfo, {where: {'userId': userId}});
     }).then(function(res){
         callback && callback(res);
     });
