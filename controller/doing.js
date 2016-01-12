@@ -1,6 +1,6 @@
 /**
  * Created by wenlinli on 2016/1/10.
- * ״̬������ȡ��״̬��ص�api
+ * 状态发布获取等状态相关的api
  */
 var EventProxy = require('eventproxy');
 var commonService = require('../service/commonService');
@@ -67,4 +67,31 @@ exports.publishDoing = function(request, response, net){
         //});
         proxy.emit('checkParams');
     });
+}
+
+exports.globalDoingList = function(request, response, next){
+    var userId = request.query['userId'];
+    var token = request.query['token'];
+    var doingList = [];
+    for(var i = 0; i < 5; i++){
+        var imgList = ['http://preview.quanjing.com/chineseview055/east-ep-a71-1370571.jpg', 'http://preview.quanjing.com/chineseview055/east-ep-a71-1370571.jpg'];
+        var obj = {};
+        obj.message = "message";
+        obj.device = "iphone";
+        obj.position = "朝阳区";
+        obj.imgCount = 2;
+        obj.imgList = imgList;
+        var user = {};
+        user.userId = 123;
+        user.nickName = "哈哈的笑";
+        user.sex = 1;
+        user.age = 21;
+        user.occupation = "程序猿";
+        obj.user = user;
+        doingList.push(obj);
+    }
+    var resData = {};
+    resData.allCount = 5;
+    resData.list = doingList;
+    responseUtil.responseOK(response, resData);
 }

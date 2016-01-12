@@ -14,4 +14,5 @@ router.get('/do/ke', register.getToken);
 router.get('/userinfo/get', userInfo.getUserInfo);
 router.post('/userinfo/save', userInfo.updateUserInfo);
 router.post('/doing/pub', doing.publishDoing);
+router.get('/doing/global/list', doing.globalDoingList);
 module.exports = router;
