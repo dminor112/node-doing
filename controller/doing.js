@@ -110,7 +110,9 @@ exports.globalDoingList = function(request, response, next){
                 obj.user = user;
                 resDoingList.push(obj);
             }
-            responseUtil.responseOK(response, resDoingList);
+            resData.allCount = 5;
+            resData.list = resDoingList;
+            responseUtil.responseOK(response, resData);
         });
     });
 }
@@ -155,7 +157,10 @@ exports.fitDoingList = function(request, response, next){
                 obj.user = user;
                 resDoingList.push(obj);
             }
-            responseUtil.responseOK(response, resDoingList);
+            var resData = {};
+            resData.allCount = 5;
+            resData.list = resDoingList;
+            responseUtil.responseOK(response, resData);
         });
     });
 }
