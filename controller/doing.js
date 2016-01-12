@@ -110,6 +110,7 @@ exports.globalDoingList = function(request, response, next){
                 obj.user = user;
                 resDoingList.push(obj);
             }
+            var resData = {};
             resData.allCount = 5;
             resData.list = resDoingList;
             responseUtil.responseOK(response, resData);
