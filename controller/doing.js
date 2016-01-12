@@ -1,11 +1,12 @@
 /**
  * Created by wenlinli on 2016/1/10.
- * 状态发布获取等状态相关的api
+ * 状�?�发布获取等状�?�相关的api
  */
 var EventProxy = require('eventproxy');
 var commonService = require('../service/commonService');
 var doingService = require('../service/doingService');
 var doingDao = require('../dao/doing');
+var userInfoDao = require('../dao/userInfo');
 var responseUtil = require('../utils/responseUtil');
 var transferUtil = require('../utils/transferUtil');
 
@@ -72,26 +73,89 @@ exports.publishDoing = function(request, response, net){
 exports.globalDoingList = function(request, response, next){
     var userId = request.query['userId'];
     var token = request.query['token'];
+    var page = request.query['page'] || 1;
+    var pageSize = request.query['pageSize'] || 10;
     var doingList = [];
-    for(var i = 0; i < 5; i++){
-        var imgList = ['http://preview.quanjing.com/chineseview055/east-ep-a71-1370571.jpg', 'http://preview.quanjing.com/chineseview055/east-ep-a71-1370571.jpg'];
-        var obj = {};
-        obj.message = "message";
-        obj.device = "iphone";
-        obj.position = "朝阳区";
-        obj.imgCount = 2;
-        obj.imgList = imgList;
-        var user = {};
-        user.userId = 123;
-        user.nickName = "哈哈的笑";
-        user.sex = 1;
-        user.age = 21;
-        user.occupation = "程序猿";
-        obj.user = user;
-        doingList.push(obj);
-    }
-    var resData = {};
-    resData.allCount = 5;
-    resData.list = doingList;
-    responseUtil.responseOK(response, resData);
+    doingDao.pageDoingList(page, pageSize, null, function(doingList){
+        //console.log(444444, res);
+        doingList = doingList || [];
+        var userIds = [];
+        for(var i = 0; i < doingList.length; i++){
+            userIds.push(doingList[i].userId);
+        }
+        userInfoDao.findUserInfosByUserIds(userIds, function(userInfoList){
+            userInfoList = userInfoList || [];
+            userListObj = {};
+            for(var i = 0; i < userInfoList.length; i++){
+                userListObj[userInfoList[i].userId] = userInfoList[i];
+            }
+            var resDoingList = [];
+            for(var i = 0; i < doingList.length; i++){
+                var doing = doingList[i];
+                var user = userListObj[doing.userId] || {};
+                var obj = {};
+                var imgList = transferUtil.parseJson(doing.imgList) || [];
+                obj.message = doing.content || '';
+                obj.device = doing.device || '';
+                obj.position = doing.position || '';
+                obj.imgCount = imgList.length;
+                obj.imgList = imgList;
+
+                var userObj = {};
+                userObj.userId = user.userId;
+                userObj.nickName = user.nickName || '';
+                userObj.sex = user.sex;
+                userObj.age = user.age;
+                userObj.occupation = user.occupation || '';
+                obj.user = user;
+                resDoingList.push(obj);
+            }
+            responseUtil.responseOK(response, resDoingList);
+        });
+    });
+}
+
+exports.fitDoingList = function(request, response, next){
+    var userId = request.query['userId'];
+    var token = request.query['token'];
+    var page = request.query['page'] || 1;
+    var pageSize = request.query['pageSize'] || 10;
+    var doingList = [];
+    doingDao.pageDoingList(page, pageSize, null, function(doingList){
+        //console.log(444444, res);
+        doingList = doingList || [];
+        var userIds = [];
+        for(var i = 0; i < doingList.length; i++){
+            userIds.push(doingList[i].userId);
+        }
+        userInfoDao.findUserInfosByUserIds(userIds, function(userInfoList){
+            userInfoList = userInfoList || [];
+            userListObj = {};
+            for(var i = 0; i < userInfoList.length; i++){
+                userListObj[userInfoList[i].userId] = userInfoList[i];
+            }
+            var resDoingList = [];
+            for(var i = 0; i < doingList.length; i++){
+                var doing = doingList[i];
+                var user = userListObj[doing.userId] || {};
+                var obj = {};
+                var imgList = transferUtil.parseJson(doing.imgList) || [];
+                obj.message = doing.content || '';
+                obj.device = doing.device || '';
+                obj.position = doing.position || '';
+                obj.imgCount = imgList.length;
+                obj.imgList = imgList;
+
+                var userObj = {};
+                userObj.userId = user.userId;
+                userObj.nickName = user.nickName || '';
+                userObj.sex = user.sex;
+                userObj.age = user.age;
+                userObj.occupation = user.occupation || '';
+                obj.user = user;
+                resDoingList.push(obj);
+            }
+            responseUtil.responseOK(response, resDoingList);
+        });
+    });
 }

@@ -16,6 +16,18 @@ exports.findUserInfoByUserId = function(userId, callback){
     });
 }
 
+exports.findUserInfosByUserIds = function(userIdList, callback){
+    sequelize.sync().then(function() {
+        return UserInfo.findAll({
+            where: {
+                userId: userIdList
+            }
+        });
+    }).then(function(userIdList) {
+        callback && callback(userIdList);
+    });
+}
+
 exports.addUserInfo = function(userInfo, callback){
     sequelize.sync().then(function() {
         return UserInfo.create(userInfo);

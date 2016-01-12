@@ -15,4 +15,5 @@ router.get('/userinfo/get', userInfo.getUserInfo);
 router.post('/userinfo/save', userInfo.updateUserInfo);
 router.post('/doing/pub', doing.publishDoing);
 router.get('/doing/global/list', doing.globalDoingList);
+router.get('/doing/fit/list', doing.fitDoingList);
 module.exports = router;
