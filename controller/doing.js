@@ -1,6 +1,6 @@
 /**
  * Created by wenlinli on 2016/1/10.
- * 状�?�发布获取等状�?�相关的api
+ * 状�?�发布获取等状�?�相关的api
  */
 var EventProxy = require('eventproxy');
 var commonService = require('../service/commonService');
@@ -10,7 +10,7 @@ var userInfoDao = require('../dao/userInfo');
 var responseUtil = require('../utils/responseUtil');
 var transferUtil = require('../utils/transferUtil');
 
-exports.publishDoing = function(request, response, net){
+exports.publishDoing = function(request, response, next){
     var params = {};
     request.pipe(request.busboy);
     var reqBody = request.busboy;
