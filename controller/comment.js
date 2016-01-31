@@ -14,10 +14,10 @@ exports.publishComment = function(request, response, next){
     request.pipe(request.busboy);
     var reqBody = request.busboy;
     var proxy = new EventProxy();
-    proxy.assign(['checkToken'], function(r1, r2, r3){
+    proxy.assign(['checkToken'], function(r1){
         var userId = params.userId,
             doingId = params.doingId;
-        if(!userId || !doingId){
+        if(!userId || !doingId || !r1){
             responseUtil.responseLackParams(response);
             return;
         }
@@ -41,7 +41,7 @@ exports.publishComment = function(request, response, next){
 }
 
 exports.getCommentList = function(request, response, next){
-    var userId = request.query['userId'];
+    var doingId = request.query['doingId'];
     var token = request.query['token'];
     var page = request.query['page'] || 1;
     var pageSize = request.query['pageSize'] || 10;

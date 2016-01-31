@@ -7,6 +7,7 @@ var test = require('./controller/test');
 var register = require('./controller/register');
 var userInfo = require('./controller/userInfo');
 var doing = require('./controller/doing');
+var comment = require('./controller/comment');
 
 router.get('/hello', test.hello);
 router.post('/do/gi', register.register);
@@ -16,4 +17,6 @@ router.post('/userinfo/save', userInfo.updateUserInfo);
 router.post('/doing/pub', doing.publishDoing);
 router.get('/doing/global/list', doing.globalDoingList);
 router.get('/doing/fit/list', doing.fitDoingList);
+router.get('/comment/pub', comment.publishComment);
+router.get('/comment/list', comment.getCommentList);
 module.exports = router;
