@@ -46,7 +46,7 @@ exports.pageCommentList = function(page, pageSize, where, callback){
         query.where = where;
     }
     sequelize.sync().then(function() {
-        return Comment.findAll(query);
+        return Comment.findAndCountAll(query);
     }).then(function(res) {
         callback && callback(res);
     });
