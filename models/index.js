@@ -38,6 +38,7 @@ var sequelize = new Sequelize('doing', 'doing', 'zx415@#12', {
 var doing = require("./doing");
 var userInfo = require("./userInfo");
 var comment = require("./comment");
+var friends = require("./friends");
 
 var Doing = sequelize.define('doing', doing, { freezeTableName: true,
     timestamps: false});
@@ -45,11 +46,14 @@ var UserInfo = sequelize.define('userInfo', userInfo, { freezeTableName: true,
     timestamps: false});
 var Comment = sequelize.define('comment', comment, { freezeTableName: true,
     timestamps: false});
+var Friends = sequelize.define('friends', friends, { freezeTableName: true,
+    timestamps: false});
 
 exports.sequelize = sequelize;
 exports.Doing = Doing;
 exports.UserInfo = UserInfo;
 exports.Comment = Comment;
+exports.Friends = Friends;
 /*
 sequelize.sync().then(function() {
     return Doing.find({

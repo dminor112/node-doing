@@ -1,7 +1,7 @@
 /**
  * Created by wenlinli on 2016/1/27.
  */
-var Doing = require('../models').Comment;
+var Comment = require('../models').Comment;
 var sequelize = require('../models').sequelize;
 
 exports.findCommentById = function(commentId, callback){
