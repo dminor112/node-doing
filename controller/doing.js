@@ -73,8 +73,13 @@ exports.publishDoing = function(request, response, next){
 exports.globalDoingList = function(request, response, next){
     var userId = request.query['userId'];
     var token = request.query['token'];
-    var page = request.query['page'] || 1;
-    var pageSize = request.query['pageSize'] || 10;
+    var page = request.query['page'];
+    var pageSize = request.query['pageSize'];
+    try{
+        page = parseInt(page), pageSize = parseInt(pageSize);
+    }catch(e){
+        page = 1, pageSize = 10;
+    }
     var doingList = [];
     doingDao.pageDoingList(page, pageSize, null, function(doingList){
         //console.log(444444, res);
@@ -98,6 +103,7 @@ exports.globalDoingList = function(request, response, next){
                 obj.message = doing.content || '';
                 obj.device = doing.device || '';
                 obj.position = doing.position || '';
+                obj.publishTime = doing.publishTime || '';
                 obj.imgCount = imgList.length;
                 obj.imgList = imgList;
 

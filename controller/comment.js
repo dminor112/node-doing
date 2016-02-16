@@ -3,7 +3,7 @@
  */
 var EventProxy = require('eventproxy');
 var commonService = require('../service/commonService');
-var doingService = require('../service/commentService');
+//var doingService = require('../service/commentService');
 var commentDao = require('../dao/comment');
 var userInfoDao = require('../dao/userInfo');
 var responseUtil = require('../utils/responseUtil');

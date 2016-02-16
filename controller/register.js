@@ -14,6 +14,7 @@ var EventProxy = require('eventproxy');
 
 //用户注册接口
 exports.register = function(request, response, next){
+    console.log(2222222222);
     request.pipe(request.busboy);
     var reqBody = request.busboy;
     var params = {};
@@ -40,6 +41,7 @@ exports.register = function(request, response, next){
         userInfo.registerTime = registerTime;
         userInfo.sex = postJson.sex;
         userInfo.userId = userId;
+        console.log(333, userInfo)
         userInfoDao.addUserInfo(userInfo, function(result){
             commonService.getToken(userId, function(token){
                 responseUtil.responseOK(response, {
@@ -63,6 +65,7 @@ exports.register = function(request, response, next){
         }
     });
     reqBody.on('field', function(key, value){
+        console.log(555, key, value);
         params[key] = value;
     });
     reqBody.on('finish', function(){
