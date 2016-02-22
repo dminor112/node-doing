@@ -104,6 +104,7 @@ exports.globalDoingList = function(request, response, next){
                 obj.device = doing.device || '';
                 obj.position = doing.position || '';
                 obj.publishTime = doing.publishTime || '';
+                obj.commentCount = doing.commentCount || 0;
                 obj.imgCount = imgList.length;
                 obj.imgList = imgList;
 
