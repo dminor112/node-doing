@@ -10,6 +10,7 @@ var responseUtil = require('../utils/responseUtil');
 var transferUtil = require('../utils/transferUtil');
 
 exports.publishComment = function(request, response, next){
+    console.log(111111);
     var params = {};
     request.pipe(request.busboy);
     var reqBody = request.busboy;
